@@ -5,10 +5,12 @@ let _ = require('lodash');
 
 // Database setup.
 
+// Create a separate test database at mLab.
+
 // Overwrite the database URL with the test database.
 
 let db_config = require('../config/db_config');
-let test_db_url = process.env.TEST_MONGO_URL;
+let test_db_url = process.env.TEST_MONGO_URL;  // Verify that this environment variable is configured on your computer
 db_config.db_url = test_db_url;
 
 const TEST_DB_NAME = 'test_todo';   // TODO change this if your database name is different
