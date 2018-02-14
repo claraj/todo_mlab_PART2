@@ -9,7 +9,8 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 
 // Read the mLab connection URL
-var db_url = process.env.MONGO_URL;
+var config = require('./config/db_config');
+var db_url = config.db_url;
 
 // And connect to the database. Print success or error message.
 mongoose.connect(db_url)
@@ -33,6 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// Configure flash messages. In a real app, the secret would be some long, random string, and actually kept secret.
 app.use(session({secret: 'top secret', resave: false, saveUninitialized: false}));
 app.use(flash());
 

@@ -30,9 +30,10 @@ li {
   padding: 10px;
 }
 
-/*.error-message {*/
-  /*color: red;*/
-/*}*/
+/* Styles for flash messages */
+.error-message {
+  color: red;
+}
 
 .info-message {
   color: green;

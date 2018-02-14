@@ -35,7 +35,6 @@ router.post('/add', function(req, res, next){
     });
   }
   else {
-    console.log('enter a task eh')
     req.flash('error', 'Please enter a task.')  // Flash an error message
     res.redirect('/');  // And redirect to the home page
   }
@@ -44,14 +43,13 @@ router.post('/add', function(req, res, next){
 
 
 /* POST to mark a task as done */
-
 router.post('/done', function(req, res, next){
   
   Task.findByIdAndUpdate( req.body._id, {completed: true})
     .then( (originalTask) => {
       // originalTask only has a value if a document with this _id was found
       if (originalTask) {
-        req.flash('info', 'Task marked as done!');
+        req.flash('info', originalTask.text + ' marked as done!');
         res.redirect('/');  // redirect to list of tasks
       } else {
         var err = new Error('Task Not Found');  // report Task not found with 404 status
@@ -69,13 +67,15 @@ router.post('/done', function(req, res, next){
 /* GET completed tasks */
 
 router.get('/completed', function(req, res, next){
+  
   Task.find({completed: true})
     .then( (docs) => {
       res.render('completed_tasks', {tasks: docs});
     })
     .catch( (err) => {
       next(err);
-    })
+    });
+  
 });
 
 
