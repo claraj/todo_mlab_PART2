@@ -18,4 +18,4 @@ Redirect to the home page. The info flash message should be shown.
 If there is an error deleting, the route handler should pass the request to the error handler.
 You can save JavaScript date objects in MongoDB. To create a date that represents right now,
 
-var d = new Date();   // d is a Date object representing the time and date the object was created.*/
+var d = new Date();   // d is a Date object representing the time and date the object was created. */

@@ -17,7 +17,6 @@ router.get('/', function(req, res, next) {
 
 
 
-
 /* POST to create a new task */
 
 router.post('/add', function(req, res, next){
@@ -28,7 +27,7 @@ router.post('/add', function(req, res, next){
     var t = new Task({text: req.body.text, completed: false})
     // Save the task, and redirect to home page if successful
     t.save().then((newTask) => {
-      console.log('The new task created is ', newTask); // just for debugging
+      // console.log('The new task created is ', newTask); // just for debugging
       res.redirect('/');  // Creates a GET request to '/'
     }).catch(() => {
       next(err);   // Forward error to the error handlers
@@ -108,7 +107,7 @@ router.post('/alldone', function(req, res, next){
   Task.updateMany({completed: false}, {completed: true})
     .then( () => {
       req.flash('info', 'All tasks are done!');
-      res.redirect('/');  // If prefered, redirect to /completed
+      res.redirect('/');
     })
     .catch( (err) => {
       next(err);
