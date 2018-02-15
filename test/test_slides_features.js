@@ -223,15 +223,15 @@ describe('empty test db before tests, and and close db after ', () => {
           done();
         });
     });
-
-
+  
+  
     it('should show a completed task\'s details on GET to /task/ID', (done) => {
       chai.request(server)
         .get('/task/' + assignment._id)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.text).to.include('assignment');
-          expect(res.text).to.include('is completed');
+          expect(res.text).to.match(/\b(was|is)\b complete/);
           done();
         });
     });
