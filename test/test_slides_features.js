@@ -1,5 +1,4 @@
 // Utility modules
-
 let _ = require('lodash');
 
 
@@ -33,7 +32,7 @@ let agent = chai.request.agent(server);
 
 // Tests!
 
-describe('open an empty test db before and close db after ', () => {
+describe('empty test db before tests, and and close db after ', () => {
   
   let tasks;
   let task_db_client;
@@ -238,6 +237,34 @@ describe('open an empty test db before and close db after ', () => {
     });
 
 
+    it('should have links to the task detail page in the list of incomplete tasks', (done)=>{
+      chai.request(server)
+        .get('/')
+        .end((err, res)=>{
+          expect(res.status).to.equal(200);
+          let regex = new RegExp(`<a href=['"]task/` + walk_dog._id + `['"]>`);
+          expect(res.text).to.match(regex);
+          regex = new RegExp(`<a href=['"]task/` + oil_change._id + `['"]>`);
+          expect(res.text).to.match(regex);
+          done();
+        });
+    });
+  
+  
+  
+    it('should have links to the task detail page in the list of complete tasks', (done)=>{
+      chai.request(server)
+        .get('/completed')
+        .end((err, res)=>{
+          expect(res.status).to.equal(200);
+          let regex = new RegExp(`<a href=['"]task/` + assignment._id + `['"]>`);
+          expect(res.text).to.match(regex);
+          done();
+        });
+    });
+    
+    
+    
     it('should mark a task as done on POST to /done body._id', (done) => {
       //chai.request(server)
       agent
