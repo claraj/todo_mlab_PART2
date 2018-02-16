@@ -223,7 +223,7 @@ describe('remove all data from db before tests, close DB connection after tests'
     });
     
     
-    it('should modify a task to have the completedDate = now and completed = true on post to /done', ()=>{
+    it('should modify a task to have the completedDate = now and completed = true on post to /done', (done)=>{
       cookie_server
         .post('/done')
         .send({ _id : assignment._id})
@@ -232,10 +232,10 @@ describe('remove all data from db before tests, close DB connection after tests'
           expect(res.status).to.equal(200);
           expect(res.text).to.contain('assignment marked as done');
           Task.findById( assignment._id ).then( (db_task) =>{
-            expect(db_task).to.have.property('dateCreated').equal(assignment.dateCreated);
+            expect(db_task.dateCreated.getTime()).to.equal(assignment.dateCreated.getTime());
             expect(db_task).to.have.property('text').equal(assignment.text);
             expect(db_task).to.have.property('completed').to.be.true;
-            let db_date_completed_ts = db_task.dateCreated.getTime();
+            let db_date_completed_ts = db_task.dateCompleted.getTime();
             let now_ts = new Date().getTime();
             expect(db_date_completed_ts - now_ts).to.be.closeTo(0, 10 * 1000); //within 10 seconds
             done();
